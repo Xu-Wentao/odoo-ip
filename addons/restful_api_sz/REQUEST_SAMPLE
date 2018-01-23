@@ -1,0 +1,82 @@
+请求示例：
+
+token获取：
+请求方式：   GET
+请求地址：   http://127.0.0.1/api/get_token?d=db&u=user&p=password
+返回类型：   JSON
+
+请求参数：
+d   str     账套名
+u   str     用户名
+p   str     密码
+
+返回示例：
+{"token": "MTUxNTExOTIwNC4zWMixAlN2M5YjYwNzhjZmY2ODYwODRjN2FjNDNkMzQ4NjBjYzkxYTAwNThhLFNjcmVhdGl2ZTEwMTYsMQ", "message": "you are authenticated", "success": true}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+商品上架：
+请求方式：  GET
+请求地址：  http://127.0.0.1/api/online.action?token=MTUxNjQ0NDQ5Ni45MiwwODQ2N2QzYzVlNGIwYzY5ZTIyYmZlZDY1Y2E1MzQzMzYxOGY2OWIwLFRFU1QyMDE5LDY&xbrand=a&xmodel=b&num=1
+返回类型：  JSON
+
+请求参数：
+token  str  token
+xbrand  str  品牌
+xmodel  str  型号
+num     int  上架数量
+备注：xbrand 和 xmodel 确定唯一产品
+
+返回示例：
+{"message": "pull on shelves sccessfully  ", "success": true}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+商品下架：
+请求方式：  GET
+请求地址：  http://127.0.0.1/api/offline.action?token=MTUxNjQ0NDQ5Ni45MiwwODQ2N2QzYzVlNGIwYzY5ZTIyYmZlZDY1Y2E1MzQzMzYxOGY2OWIwLFRFU1QyMDE5LDY&xbrand=a&xmodel=b
+返回类型：  JSON
+
+返回示例：
+{"message": "pull off shelves sccessfully ", "success": true}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+库存查询：
+请求方式：   POST
+请求地址：   http://127.0.0.1/api/stock.query
+返回类型：   JSON
+请求参数（HEADERS）：  Content-Type：text/plain
+请求参数（BODY）：
+{"token": "MTUxNjMyODY2My40LDg0ZDZjNjc0ZWU3NThmM2MyZjFjNzEwMmYzMWFhYzllNTgxMzVjOTMsVEVTVDIwMTgsNg", "products": [['xbrand0','xmodel0'],['xbrand1','xmodel1']]}
+
+
+参数说明：
+token   str    token
+products []     产品列表,['xbrand0','xmodel0']品牌和型号集合表示一个产品，注意加上引号；[xbrand,xmodel]为错误参数
+
+返回示例：
+{"message": " ", "lastest_stock": [["S", 0], [["xbrand1", "xmodel1"], "N%"]], "success": true}
+N% 表示对应产品存在
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+订单同步：
+请求方式：   POST
+请求地址：   http://127.0.0.1/api/sale.order
+返回类型：   JSON
+请求参数（HEADERS）：  Content-Type：text/plain
+请求参数（BODY）：
+{"token": "MTUxNjMzOTAyNi42NCw5MDUyZTA3Y2E0ZGYzYzFmNGM3MmE3MzdkMmI5YzFiNTdmMDJlYmFkLFRFU1QyMDE4LDY", "order_line": [{"price_unit": 111, "product_uom_qty": 9,
+"product_id": {"xbrand": "M","xmodel":"Y"}}, {"price_unit": 111, "product_uom_qty": 60, "product_id": {"name": "S"}}], "partner_id": {"street": "street 888", "country_name": "中国", "state_name": "广东省", "city": "佛山", "mobile": "18000000000","name": "jack"}}
+
+参数说明：
+token   str     TOKEN
+partner_id  {}   购买人相关信息（名字，电话，地址...）
+order_line  [{},{}.{}]  订单明细（产品，数量，价格）
+
+
+返回示例：
+{"message": " ", "lastest_stock": [["M", 50.0], ["S", 3434.0]], "success": true}
+
+
