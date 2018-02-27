@@ -51,7 +51,8 @@ var WebClient = Widget.extend({
         this._current_state = null;
         this.menu_dm = new utils.DropMisordered();
         this.action_mutex = new utils.Mutex();
-        this.set('title_part', {"zopenerp": "Odoo"});
+        //xuwentao
+        this.set('title_part', {"zopenerp": ""});
     },
     start: function() {
         var self = this;
